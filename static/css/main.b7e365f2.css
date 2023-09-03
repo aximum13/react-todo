@@ -1,0 +1,2 @@
+.footer{display:flex;justify-content:space-between;position:static}.footer.hidden,.toggle-all.hidden+label{display:none}.filters{display:flex;position:relative}.filters li{align-items:center;display:flex}.filters li button{border:1px solid transparent;border-radius:3px;color:inherit;cursor:pointer;margin:3px;padding:3px 7px;text-decoration:none}.filters li button:hover{border-color:rgba(175,47,47,.1)}.filters li button.selected{border-color:rgba(175,47,47,.2)}
+/*# sourceMappingURL=main.b7e365f2.css.map*/
