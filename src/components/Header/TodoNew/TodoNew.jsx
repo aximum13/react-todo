@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addTodo } from 'actions/actionCreator';
 
-const TodoNew = ({ create }) => {
+const TodoNew = () => {
+  const dispatch = useDispatch();
+
+  const handleAddTodo = (id, text, isDone) => {
+    dispatch(addTodo(id, text, isDone));
+  };
+
   const [state, setState] = useState('');
   const handleInputChange = (event) => {
     setState(event.target.value);
   };
 
-  const createTodo = (event) => {
-    const { value } = event.target;
-    let text = value.trim();
+  const createTodo = () => {
+    const text = state.trim();
 
     if (text) {
-      create(new Date().getTime(), text, false);
+      handleAddTodo(new Date().getTime(), text, false);
       setState('');
     }
   };

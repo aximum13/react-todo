@@ -1,20 +1,24 @@
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { filteredTodos } from 'utils/filteredTodos';
 
 import TodoItem from 'components/Main/TodoItem/TodoItem';
 
-const TodoList = ({ list, remove, edit, updateState }) => {
+const TodoList = () => {
+  const todos = useSelector((state) => state.todos);
+  const filters = useSelector((state) => state.filters);
+
+  const filteredResults = filteredTodos(todos, filters);
+
   return (
     <ul className="todo-list">
-      {list.length > 0 &&
-        list.map((todo) => (
+      {filteredResults.length > 0 &&
+        filteredResults.map((todo) => (
           <TodoItem
-            updateState={updateState}
-            remove={remove}
             id={todo.id}
             key={todo.id}
             text={todo.text}
             isDone={todo.isDone}
-            edit={edit}
           />
         ))}
     </ul>

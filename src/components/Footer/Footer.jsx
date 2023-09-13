@@ -1,29 +1,17 @@
-import Filter from 'components/Footer/Filter';
-import { connect } from 'react-redux';
-import { changeFilter, clearCompleteTodo } from 'actions/actionCreator';
+import React from 'react';
 
-import { TodoCount } from 'components/Footer/TodoCount';
+import Filter from 'components/Footer/Filter/Filter';
+import TodoCount from 'components/Footer/TodoCount/TodoCount';
+import ClearCompleteTodos from 'components/Footer/ClearCompleteTodos/ClearCompleteTodos';
 
-const Footer = (todos, changeFilter, filters, clearCompleteTodo) => {
+const Footer = () => {
   return (
     <div className={'footer'}>
-      <TodoCount list={todos} />
-      <Filter changeFilter={changeFilter} activeFilter={filters} />
-
-      <button onClick={clearCompleteTodo} className="clear-completed">
-        Clear completed
-      </button>
+      <TodoCount />
+      <Filter />
+      <ClearCompleteTodos />
     </div>
   );
 };
 
-export default connect(
-  ({ todos, filters }) => ({
-    todos,
-    filters,
-  }),
-  {
-    changeFilter,
-    clearCompleteTodo,
-  }
-)(Footer);
+export default Footer;

@@ -1,5 +1,8 @@
 import classNames from 'classnames';
 import { PropTypes } from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { changeFilter } from 'actions/actionCreator';
 
 const FILTERS_BTN = [
   {
@@ -19,19 +22,23 @@ const FILTERS_BTN = [
   },
 ];
 
-const Filter = ({ changeFilter, activeFilter }) => {
+const Filter = () => {
+  const filters = useSelector((state) => state.filters);
+  const dispatch = useDispatch();
+
+  const handleChangeFilter = (activeFilter) => {
+    dispatch(changeFilter(activeFilter));
+  };
+
   return (
     <ul className="filters">
       {FILTERS_BTN.map(({ text, id, className }) => (
         <li key={id}>
           <button
             onClick={() => {
-              changeFilter(id);
+              handleChangeFilter(id);
             }}
-            className={classNames(
-              className,
-              activeFilter === id ? 'selected' : ''
-            )}
+            className={classNames(className, filters === id ? 'selected' : '')}
           >
             {text}
           </button>

@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
-const ToggleAll = ({ toggleAll, todos }) => {
+import { toggleAll } from 'actions/actionCreator';
+
+const ToggleAll = () => {
+  const todos = useSelector((state) => state.todos);
   const [checked, setChecked] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleToggleAll = (isDone) => {
+    dispatch(toggleAll(isDone));
+  };
 
   useEffect(() => {
     todos.every((item) => item.isDone === true) && todos.length > 0
@@ -17,7 +27,7 @@ const ToggleAll = ({ toggleAll, todos }) => {
     <>
       <input
         id="toggle-all"
-        onClick={toggleAll}
+        onClick={handleToggleAll}
         onChange={handleChange}
         checked={checked}
         className={'toggle-all'}
@@ -29,12 +39,12 @@ const ToggleAll = ({ toggleAll, todos }) => {
 };
 
 ToggleAll.propTypes = {
-  toggleAll: PropTypes.func,
+  handleToggleAll: PropTypes.func,
   todos: PropTypes.array,
 };
 
 ToggleAll.defaultProps = {
-  toggleAll: () => {},
+  handleToggleAll: () => {},
   todos: [],
 };
 

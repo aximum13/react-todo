@@ -1,11 +1,28 @@
 import classNames from 'classnames';
-import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-const TodoItem = ({ updateState, remove, id, text, isDone, edit }) => {
+import { removeTodo, completeTodo, editTodo } from 'actions/actionCreator';
+
+const TodoItem = ({ id, text, isDone }) => {
   const [checked, setChecked] = useState();
   const [viewEdited, setViewEdited] = useState(Boolean);
   const [editText, setEditText] = useState('');
+
+  const dispatch = useDispatch();
+
+  const handleRemoveTodo = (id) => {
+    dispatch(removeTodo(id));
+  };
+
+  const handleCompleteTodo = (id) => {
+    dispatch(completeTodo(id));
+  };
+
+  const handleEditTodo = (id, newText) => {
+    dispatch(editTodo(id, newText));
+  };
 
   const handleChange = () => {
     setChecked(!isDone);
@@ -19,7 +36,7 @@ const TodoItem = ({ updateState, remove, id, text, isDone, edit }) => {
   const handleBlur = () => {
     setViewEdited(false);
     let text = editText.trim();
-    edit(id, text);
+    handleEditTodo(id, text);
   };
 
   const handleEditChange = (event) => {
@@ -38,7 +55,7 @@ const TodoItem = ({ updateState, remove, id, text, isDone, edit }) => {
       <div className="view">
         <input
           type="checkbox"
-          onClick={() => updateState(id)}
+          onClick={() => handleCompleteTodo(id)}
           checked={isDone}
           className="toggle"
           onChange={handleChange}
@@ -51,7 +68,10 @@ const TodoItem = ({ updateState, remove, id, text, isDone, edit }) => {
             {text}
           </label>
         ) : null}
-        <button onClick={() => remove(id)} className="destroy"></button>
+        <button
+          onClick={() => handleRemoveTodo(id)}
+          className="destroy"
+        ></button>
       </div>
       {viewEdited ? (
         <input
