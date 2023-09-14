@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { changeFilter } from 'actions/actionCreator';
 
+import styles from './Filter.module.sass';
 const FILTERS_BTN = [
   {
     text: 'All',
@@ -16,7 +17,7 @@ const FILTERS_BTN = [
     className: 'active-todo',
   },
   {
-    text: 'Complete',
+    text: 'Completed',
     id: 'complete',
     className: 'complete-todo',
   },
@@ -31,14 +32,18 @@ const Filter = () => {
   };
 
   return (
-    <ul className="filters">
+    <ul className={styles.Filters}>
       {FILTERS_BTN.map(({ text, id, className }) => (
         <li key={id}>
           <button
             onClick={() => {
               handleChangeFilter(id);
             }}
-            className={classNames(className, filters === id ? 'selected' : '')}
+            className={classNames(
+              styles.Button,
+              className,
+              filters === id ? styles.Selected : ''
+            )}
           >
             {text}
           </button>

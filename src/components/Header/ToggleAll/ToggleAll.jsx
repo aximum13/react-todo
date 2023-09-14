@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { toggleAll } from 'actions/actionCreator';
 
+import styles from './ToggleAll.module.sass';
+
 const ToggleAll = () => {
   const todos = useSelector((state) => state.todos);
   const [checked, setChecked] = useState(false);
@@ -30,10 +32,12 @@ const ToggleAll = () => {
         onClick={handleToggleAll}
         onChange={handleChange}
         checked={checked}
-        className={'toggle-all'}
+        className={styles.ToggleAll}
         type="checkbox"
       />
-      <label htmlFor="toggle-all">Mark all as complete</label>
+      <label className={styles.Label} htmlFor="toggle-all">
+        Mark all as complete
+      </label>
     </>
   );
 };

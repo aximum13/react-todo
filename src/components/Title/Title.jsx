@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
+import styles from './Title.module.sass';
 
 const Title = ({ title }) => {
-  return <h1>{title}</h1>;
+  return <h1 className={styles.Title}>{title}</h1>;
 };
 
 Title.propTypes = {

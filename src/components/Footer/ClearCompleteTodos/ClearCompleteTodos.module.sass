@@ -1,0 +1,17 @@
+@import 'styles/variables'
+
+.ClearCompleteTodos
+    color: inherit
+    cursor: pointer
+    position: relative
+
+    &Hidden
+        visibility: hidden
+
+    @media (max-width:$mobile)
+        margin-top: 4px
+        margin-bottom: 4px
+
+        &Hidden
+            height: 0
+            margin: 0

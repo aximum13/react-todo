@@ -5,7 +5,10 @@ import { useDispatch } from 'react-redux';
 
 import { removeTodo, completeTodo, editTodo } from 'actions/actionCreator';
 
+import styles from './TodoItem.module.sass';
+
 const TodoItem = ({ id, text, isDone }) => {
+  // eslint-disable-next-line
   const [checked, setChecked] = useState();
   const [viewEdited, setViewEdited] = useState(Boolean);
   const [editText, setEditText] = useState('');
@@ -36,7 +39,7 @@ const TodoItem = ({ id, text, isDone }) => {
   const handleBlur = () => {
     setViewEdited(false);
     let text = editText.trim();
-    handleEditTodo(id, text);
+    if (text) handleEditTodo(id, text);
   };
 
   const handleEditChange = (event) => {
@@ -47,42 +50,41 @@ const TodoItem = ({ id, text, isDone }) => {
     <li
       key={id}
       className={classNames(
-        'todo-item',
-        isDone ? 'completed' : '',
-        viewEdited ? 'editing' : ''
+        styles.TodoItem,
+        isDone ? styles.Completed : '',
+        viewEdited ? styles.Editing : ''
       )}
     >
-      <div className="view">
+      <div className={classNames(styles.ViewItem)}>
         <input
           type="checkbox"
           onClick={() => handleCompleteTodo(id)}
           checked={isDone}
-          className="toggle"
+          className={classNames(styles.Toggle, viewEdited ? 'hidden' : '')}
           onChange={handleChange}
         />
-        {!viewEdited ? (
-          <label
-            onDoubleClick={() => handleDoubleClick(text)}
-            className={classNames('todo-text')}
-          >
-            {text}
-          </label>
-        ) : null}
+
+        <label
+          onDoubleClick={() => handleDoubleClick(text)}
+          className={classNames(styles.Label, viewEdited ? 'hidden' : '')}
+        >
+          {text}
+        </label>
+
         <button
           onClick={() => handleRemoveTodo(id)}
-          className="destroy"
+          className={classNames(styles.Remove, viewEdited ? 'hidden' : '')}
         ></button>
-      </div>
-      {viewEdited ? (
         <input
           type="text"
-          autoFocus={true}
+          autoFocus={viewEdited}
           onChange={handleEditChange}
           value={editText}
-          className="edit"
+          className={classNames(styles.Edit, !viewEdited ? 'hidden' : '')}
           onBlur={handleBlur}
+          ref={(input) => viewEdited && input && input.focus()}
         />
-      ) : null}
+      </div>
     </li>
   );
 };

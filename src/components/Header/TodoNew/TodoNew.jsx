@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { addTodo } from 'actions/actionCreator';
 
+import styles from './TodoNew.module.sass';
+
 const TodoNew = () => {
   const dispatch = useDispatch();
 
@@ -15,27 +17,28 @@ const TodoNew = () => {
     setState(event.target.value);
   };
 
-  const createTodo = () => {
+  const createTodo = (event) => {
     const text = state.trim();
+    const enterKeyCode = 13;
 
-    if (text) {
+    if (text && event.keyCode === enterKeyCode) {
       handleAddTodo(new Date().getTime(), text, false);
       setState('');
     }
   };
 
   return (
-    <div className="app">
+    <>
       <input
         type="text"
         placeholder="What needs to be done?"
         autoFocus={true}
-        className="new-todo"
+        className={styles.TodoNew}
         onChange={handleInputChange}
-        onBlur={createTodo}
+        onKeyDown={createTodo}
         value={state}
       />
-    </div>
+    </>
   );
 };
 

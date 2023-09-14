@@ -1,6 +1,7 @@
 import { PropTypes } from 'prop-types';
 import { useSelector } from 'react-redux';
 
+import styles from './TodoCount.module.sass';
 const TodoCount = () => {
   const todos = useSelector((state) => state.todos);
 
@@ -9,8 +10,8 @@ const TodoCount = () => {
 
   const taskCounter = getActiveTodosCounter(todos);
   return (
-    <span className="todo-count">
-      <strong>{taskCounter}</strong> item{taskCounter !== 1 ? 's' : ''} left
+    <span className={styles.TodoCount}>
+      <span>{taskCounter}</span> item{taskCounter !== 1 ? 's' : ''} left
     </span>
   );
 };

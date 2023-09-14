@@ -1,0 +1,27 @@
+@import 'styles/variables'
+
+.Filters
+    display: flex
+    position: relative
+
+    & li
+        display: flex
+        align-items: center
+
+.Button
+    margin: 3px
+    padding: 3px 7px
+    border: 1px solid transparent
+    border-radius: 3px
+    cursor: pointer
+    color: inherit
+
+    @media (max-width:$mobile)
+        padding: 6px
+        margin: 6px 6px
+
+    &:hover
+        border-color: rgba(175, 47, 47, 0.1)
+
+    &.Selected
+        border-color: rgba(175, 47, 47, 0.2)
