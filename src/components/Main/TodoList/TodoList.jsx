@@ -1,12 +1,14 @@
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+
 import { filteredTodos } from 'utils/filteredTodos';
+import { getTodos } from 'selectors/todosSelector';
+import { getFilters } from 'selectors/filtersSelector';
 
 import TodoItem from 'components/Main/TodoItem/TodoItem';
 
 const TodoList = () => {
-  const todos = useSelector((state) => state.todos);
-  const filters = useSelector((state) => state.filters);
+  const todos = useSelector(getTodos);
+  const filters = useSelector(getFilters);
 
   const filteredResults = filteredTodos(todos, filters);
 
@@ -23,20 +25,6 @@ const TodoList = () => {
         ))}
     </ul>
   );
-};
-
-TodoList.propTypes = {
-  list: PropTypes.array,
-  removeTask: PropTypes.func,
-  completeTask: PropTypes.func,
-  edit: PropTypes.func,
-};
-
-TodoList.defaultProps = {
-  list: [],
-  removeTask: () => {},
-  completeTask: () => {},
-  edit: () => {},
 };
 
 export default TodoList;

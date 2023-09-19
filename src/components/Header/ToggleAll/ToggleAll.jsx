@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { toggleAll } from 'actions/actionCreator';
+import { getTodos } from 'selectors/todosSelector';
 
 import styles from './ToggleAll.module.sass';
 
 const ToggleAll = () => {
-  const todos = useSelector((state) => state.todos);
-  const [checked, setChecked] = useState(false);
-
+  const todos = useSelector(getTodos);
   const dispatch = useDispatch();
 
-  const handleToggleAll = (isDone) => {
-    dispatch(toggleAll(isDone));
-  };
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     todos.every((item) => item.isDone === true) && todos.length > 0
@@ -22,9 +18,14 @@ const ToggleAll = () => {
       : setChecked(false);
   }, [todos]);
 
+  const handleToggleAll = (isDone) => {
+    dispatch(toggleAll(isDone));
+  };
+
   const handleChange = () => {
     setChecked(!checked);
   };
+
   return (
     <>
       <input
@@ -35,21 +36,9 @@ const ToggleAll = () => {
         className={styles.ToggleAll}
         type="checkbox"
       />
-      <label className={styles.Label} htmlFor="toggle-all">
-        Mark all as complete
-      </label>
+      <label className={styles.Label} htmlFor="toggle-all"></label>
     </>
   );
-};
-
-ToggleAll.propTypes = {
-  handleToggleAll: PropTypes.func,
-  todos: PropTypes.array,
-};
-
-ToggleAll.defaultProps = {
-  handleToggleAll: () => {},
-  todos: [],
 };
 
 export default ToggleAll;

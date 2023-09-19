@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { changeFilter } from 'actions/actionCreator';
+import { getFilters } from 'selectors/filtersSelector';
 
 import styles from './Filter.module.sass';
 const FILTERS_BTN = [
@@ -24,7 +24,7 @@ const FILTERS_BTN = [
 ];
 
 const Filter = () => {
-  const filters = useSelector((state) => state.filters);
+  const filters = useSelector(getFilters);
   const dispatch = useDispatch();
 
   const handleChangeFilter = (activeFilter) => {
@@ -39,11 +39,9 @@ const Filter = () => {
             onClick={() => {
               handleChangeFilter(id);
             }}
-            className={classNames(
-              styles.Button,
-              className,
-              filters === id ? styles.Selected : ''
-            )}
+            className={classNames(styles.Button, className, {
+              [styles.Selected]: filters === id,
+            })}
           >
             {text}
           </button>
@@ -51,11 +49,6 @@ const Filter = () => {
       ))}
     </ul>
   );
-};
-
-Filter.propTypes = {
-  activeFilter: PropTypes.string,
-  changeFilter: PropTypes.func,
 };
 
 export default Filter;

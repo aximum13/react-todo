@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import { PropTypes } from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux/';
+import { useSelector } from 'react-redux';
 
+import { getTodos } from 'selectors/todosSelector';
 import { clearCompleteTodo } from 'actions/actionCreator';
 
 import styles from './ClearCompleteTodos.module.sass';
@@ -14,24 +14,20 @@ const ClearCompleteTodos = () => {
     dispatch(clearCompleteTodo());
   };
 
-  const todos = useSelector((state) => state.todos);
+  const todos = useSelector(getTodos);
+
   const isComplete = todos.some((item) => item.isDone === true);
 
   return (
     <button
       onClick={handleClearCompleteTodo}
-      className={classNames(
-        styles.ClearCompleteTodos,
-        !isComplete ? styles.ClearCompleteTodosHidden : ''
-      )}
+      className={classNames(styles.ClearCompleteTodos, {
+        [styles.ClearCompleteTodosHidden]: !isComplete,
+      })}
     >
       Clear completed
     </button>
   );
-};
-
-ClearCompleteTodos.propTypes = {
-  handleClearCompleteTodo: PropTypes.func,
 };
 
 export default ClearCompleteTodos;
